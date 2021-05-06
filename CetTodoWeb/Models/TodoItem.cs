@@ -39,7 +39,7 @@ namespace CetTodoWeb.Models
         {
             get
             {
-                var remaingTime = (DateTime.Now - DueDate);
+                var remaingTime = ( DueDate - DateTime.Now );
                 return (int)remaingTime.TotalHours;
             }
         }
