@@ -20,23 +20,28 @@ namespace CetTodoWeb.Controllers
         }
 
         // GET: Todo
-        public async Task<IActionResult> Index(bool showall=false)
+        public async Task<IActionResult> Index(SearchViewModel searchModel)
         {
 
             /* var applicationDbContext2 = _context.TodoItems.Include(t => t.Category)
                  .Where(t => showall || !t.IsCompleted ).OrderBy(t => t.DueDate);
             */
-            ViewBag.Showall = showall;
-            var applicationDbContext = _context.TodoItems.Include(t => t.Category).AsQueryable();
+           
+            var query = _context.TodoItems.Include(t => t.Category).AsQueryable(); // select * from TodoItems t inner join Categories c on t.CategoryId=c.Id
 
-            if(!showall)
+            if(!searchModel.ShowAll)
             {
-                applicationDbContext = applicationDbContext.Where(t => !t.IsCompleted);
+                query = query.Where(t => !t.IsCompleted); // where t.Iscompleted=0
+            }
+            if (!String.IsNullOrWhiteSpace(searchModel.SearchText))
+            {
+                query = query.Where(t => t.Title.Contains(searchModel.SearchText)); // where t.Title like '%serchtext%'
             }
 
-            applicationDbContext= applicationDbContext.OrderBy(t=>t.DueDate);
+            query= query.OrderBy(t=>t.DueDate); // order by DueDate
+            searchModel.Result = await query.ToListAsync();
 
-            return View(await applicationDbContext.ToListAsync());
+            return View(searchModel);
         }
 
         // GET: Todo/Details/5
