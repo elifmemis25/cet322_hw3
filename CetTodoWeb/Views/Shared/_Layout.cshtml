@@ -27,14 +27,8 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Todo" asp-action="Index">Todo</a>
                         </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Todo" asp-action="Index" asp-all-route-categoryId="2">Courses</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Todo" asp-action="Index" asp-all-route-categoryId="3">Hobbies</a>
-                        </li>
+                        @await Component.InvokeAsync("CategoryMenu", new { ShowEmpty = true })
+                        
                     </ul>
 
                     <form asp-controller="todo" asp-action="index" method="get">

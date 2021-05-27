@@ -52,5 +52,8 @@ namespace CetTodoWeb.Models
          select * from Todos t inner join Categories c on t.CategoryId=c.Id
          * 
          */
+
+        public string CetUserId { get; set; }
+        public virtual CetUser CetUser { get; set; }
     }
 }
