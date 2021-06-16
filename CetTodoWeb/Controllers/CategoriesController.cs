@@ -44,6 +44,8 @@ namespace CetTodoWeb.Controllers
             return View(category);
         }
 
+        //abcdef
+
         // GET: Categories/Create
         public IActionResult Create()
         {
